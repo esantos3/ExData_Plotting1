@@ -1,0 +1,12 @@
+data=read.table("household_power_consumption.txt",sep=";",header=TRUE)
+sub=data[data$Date=="1/2/2007" | data$Date=="2/2/2007",]
+sub$Date=as.Date(sub$Date, "%d/%m/%Y")
+dateTime=strptime(paste(sub$Date,sub$Time,sep=" "),format="%Y-%m-%d %H:%M:%S")
+sub2=data.frame(sub,dateTime)
+sub2$Sub_metering_1=as.numeric(as.vector(sub2$Sub_metering_1))
+sub2$Sub_metering_2=as.numeric(as.vector(sub2$Sub_metering_2))
+sub2$Sub_metering_3=as.numeric(as.vector(sub2$Sub_metering_3))
+plot(sub2$dateTime,sub2$Sub_metering_1,type="l",xlab="",ylab="Energy sub metering")
+points(sub2$dateTime,sub2$Sub_metering_2,type="l",col="red")
+points(sub2$dateTime,sub2$Sub_metering_3,type="l",col="blue")
+legend("topright",c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("black","red","blue"),lwd=1)
